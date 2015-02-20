@@ -1,0 +1,227 @@
+.TH "FbTerm" "1" "@RELEASE_DATE@" "FbTerm @VERSION@" "FbTerm User Manual"
+.SH "NAME"
+FbTerm - a fast Frame Buffer based TERMinal emulator for linux
+.SH "SYNOPSIS"
+\fBfbterm\fR [\fIoptions\fR] [--] [\fIcommand\fR [\fIarguments\fR]]
+.SH "DESCRIPTION"
+FbTerm is a fast terminal emulator for linux with frame buffer device or VESA video card. Features include:
+  
+  * mostly as fast as terminal of linux kernel while accelerated scrolling is enabled
+  * select font with fontconfig and draw text with freetype2, same as Qt/Gtk+ based GUI apps
+  * dynamically create/destroy up to 10 windows initially running default shell
+  * record scroll-back history for every window
+  * auto-detect current locale and convert text encoding, support double width scripts like Chinese, Japanese etc
+  * switch between configurable additional text encodings with hot keys on the fly
+  * copy/past selected text between windows with mouse when gpm server is running
+  * change the orientation of screen display, a.k.a. screen rotation
+  * lightweight input method framework with client-server architecture
+  * background image for eye candy
+.SH "OPTIONS"
+\fIcommand\fR [\fIarguments\fR] may be given to override the built-in choice of shell program. Normally FbTerm
+checks the \fISHELL\fR variable. If that is not set, it tries to use the user's login shell program specified in the password
+file. If that is not set, /bin/sh will be used. You should use the \fI--\fR argument to separate FbTerm's options from
+the arguments supplied to the \fIcommand\fR.
+
+FbTerm first uses option value specified in command line arguments, then in the configure file \fI$HOME/.fbtermrc\fR.
+If that file doesn't exist, FbTerm will create it with default options on startup.
+.TP
+\fB-h, --help\fR
+display the help and exit
+.TP
+\fB-V, --version\fR
+display FbTerm version and exit
+.TP
+\fB-v, --verbose\fR
+display extra FbTerm's information
+.TP
+\fB-n, --font-names=\fR\fItext\fR
+specify font family names
+.TP
+\fB-s, --font-size=\fR\fInum\fR
+specify font pixel size
+.TP
+\fB--font-width=\fR\fInum\fR
+force font width
+.TP
+\fB--font-height=\fR\fInum\fR
+force font height
+.TP
+\fB-f, --color-foreground=\fR\fInum\fR
+specify foreground color
+.TP
+\fB-b, --color-background=\fR\fInum\fR
+specify background color
+.TP
+\fB-e, --text-encodings=\fR\fItext\fR
+specify additional text encodings
+.TP
+\fB-a, --ambiguous-wide
+treat ambiguous width characters as wide
+.TP
+\fB-r, --screen-rotate=\fR\fInum\fR
+specify the orientation of screen display
+.TP
+\fB-i, --input-method=\fR\fItext\fR
+specify input method program
+.TP
+\fB--cursor-shape=\fR\fInum\fR
+specify default cursor shape
+.TP
+\fB--cursor-interval=\fR\fInum\fR
+specify cursor flash interval
+.TP
+\fB--vesa-mode=\fR\fInum\fR
+specify VESA video mode
+.TP
+\fB--vesa-mode=list\fR
+display available VESA video modes
+
+.TP
+see comments in \fI$HOME/.fbtermrc\fR for details of these options.
+.SH "SHORTCUT SUMMARY"
+keyboard:
+  CTRL_ALT_E:    exit from FbTerm
+  CTRL_ALT_C:    create a new window
+  CTRL_ALT_D:    destroy current window
+  CTRL_ALT_1:    switch to window 1
+  CTRL_ALT_2:    switch to window 2
+  CTRL_ALT_3:    switch to window 3
+  CTRL_ALT_4:    switch to window 4
+  CTRL_ALT_5:    switch to window 5
+  CTRL_ALT_6:    switch to window 6
+  CTRL_ALT_7:    switch to window 7
+  CTRL_ALT_8:    switch to window 8
+  CTRL_ALT_9:    switch to window 9
+  CTRL_ALT_0:    switch to window 10
+  SHIFT_LEFT:    switch to previous window
+  SHIFT_RIGHT:   switch to next window
+  SHIFT_PAGEUP:    history scroll up
+  SHIFT_PAGEDOWN:  history scroll down
+  CTRL_ALT_F1:                 switch to encoding of current locale
+  CTRL_ALT_F2 to CTRL_ALT_F6:  switch to additional encodings
+  CTRL_SPACE:    toggle input method
+  CTRL_ALT_K:    kill input method server
+
+mouse:
+  move when left button down:      select text
+  double click with left button:   auto select text
+  click with right button:         paste selected text
+
+Sometimes above actions will not work, please try to redo them with shift key holding down.
+.SH "FRAME BUFFER DEVICE"
+Before executing FbTerm, make sure there is a frame buffer device in your system, and you have read/write access right
+with it. Normally FbTerm tries to open /dev/fb0 and /dev/fb/0, environment variable "\fIFRAMEBUFFER\fR" may be used to override this
+built-in behavior.
+.SH "VESA VIDEO DEVICE"
+From version 1.6, FbTerm adds VESA video card support. By default, FbTerm tries frame buffer device first, if failure, 
+then tries to use VESA device with highest resolution and color depth. option "\fIvesa-mode\fR" may be given to force only open
+VESA device with the specified video mode. To see available video modes for your VESA card, execute "\fBfbterm --vesa-mode=list\fR".
+
+Attention: 1) VESA support requires root privilege to work; 2) do not force to use VESA device on the system with frame buffer device
+enabled, they maybe conflict with each other.
+.SH "FONT"
+FbTerm invokes fontconfig to get a font list, if the first font doesn't contain the glyph for the rendering character,
+it will try second font, then the third, ... and so on, user can see this ordered font list with "\fBfbterm -v\fR".
+
+If you don't like the fonts selected by FbTerm, execute "fc-list" to get available fonts, choose favorites as
+the value of option "\fIfont-names\fR". You may also modify the configure file of fontconfig, which will
+change the behavior of all programs based on fontconfig!
+.SH "TEXT ENCODING"
+By using iconv, FbTerm converts other encodings to internal encoding UTF-8. On startup, FbTerm checks variable
+\fILC_CTYPE\fR to determine the default text encoding, which is binded to shortcut CTRL_ALT_F1.
+User can specify up to 5 additional encodings with option "\fItext-encodings\fR", for example, as a Chinese user,
+you set "text-encodings=gbk,big5", shortcut CTRL_ALT_F2 will bind to gbk, and CTRL_ALT_F3 bind to big5.
+
+In a number of CJK encodings there are ambiguous width characters which have a width of either narrow or wide
+depending on the context of their use. By default, FbTerm treats them as narrow width characters,
+option "\fIambiguous-wide\fR" may be used to change the behavior.
+.SH "BACKGROUND IMAGE"
+FbTerm doesn't load and parse any image file with various formats directly, instead it takes a screen shot of
+frame buffer device on startup if variable \fIFBTERM_BACKGROUND_IMAGE\fR is defined, then uses this screen shot as
+the background for text rendering. In order to enable background image support, user should first
+put a image to frame buffer device with a image viewer. A wrapper script using fbv is listed below:
+\fB
+.br
+
+    #!/bin/bash
+
+    # fbterm-bi: a wrapper script to enable background image with fbterm
+    # usage: fbterm-bi /path/to/image fbterm-options
+
+    echo -ne "\\e[?25l" # hide cursor
+
+    fbv -ciuker "$1" << EOF
+    q
+    EOF
+
+    shift
+    export FBTERM_BACKGROUND_IMAGE=1
+    exec fbterm "$@"
+\fR    
+Attention: 1) do not enable background image on frame buffer device with 8bpp depth, because FbTerm changes color map
+table for correct text rendering; 2) if the screen shot is different from the original image, try to use a fast scrolling
+disabled frame buffer device.
+.SH "256 COLOR EXTENSION"
+FbTerm supports xterm's 256 color mode extension. The first 16 colors are the default terminal colors. Additionally, there's
+a 6x6x6 color cube, and 24 grayscale tones. But xterm's 256 color escape sequences conflict with the linux sequences implemented by FbTerm,
+so private escape sequences were introduced to support this feature:
+\fB
+.br
+
+    ESC [ 1 ; n }                   set foreground color to n (0 - 255)
+    ESC [ 2 ; n }                   set background color to n (0 - 255)
+    ESC [ 3 ; n ; r ; g ; b }       set color n to (r, g, b) ,  n, r, g, b all in (0 - 255)
+\fR
+
+A new terminfo database entry named "fbterm" was added to use these private sequences, all program based on terminfo should work with it.
+By default, FbTerm sets environment variable "TERM" to value "linux", user need run "TERM=fbterm /path/to/program" to enable 256 color mode.
+.SH "INPUT METHOD"
+Instead of adding input method directly in FbTerm, a client-server based input method framework is designed to do
+this work. FbTerm acts as a client, standalone IM program as a server, and they run in separated processes.
+
+As a normal IM user, you should install a IM program written for FbTerm, and specify it as the value of option "\fIinput-method\fR".
+CTRL_SPACE is the shortcut to activate/deactivate input method. And CTRL_ALT_K may be used to kill the IM program when it has freezed. 
+
+.SH "SECURITY NOTES"
+FbTerm tries to change linux kernel key map table to setup shortcuts, which requires \fISYS_TTY_CONFIG\fR capability since kernel
+version 2.6.15. It means FbTerm should be a setuid 0 program to allow non-root users to use shortcuts. FbTerm only
+switches to root privilege temporarily when changing key map table, we believe it's pretty much free from security problems.
+If you really don't like this and have a linux kernel with file system capabilities enabled, which allow user to give
+binaries a subset of root's powers without using setuid 0 (official kernel 2.6.27 includes it), you can run command
+"\fBsudo setcap 'cap_sys_tty_config+ep' /path/to/fbterm\fR".
+
+FbTerm redirects /dev/tty0 output to the pseudo terminal of current sub-window. In linux before version 2.6.10, anybody can do this
+as long as the output was not redirected yet; since version 2.6.10, only root or a process with the \fICAP_SYS_ADMIN\fR capability may do this.
+You should do similar work with above ones for FbTerm to enable this feature for non-root users. 
+
+.SH "PERFORMANCE"
+According test result, FbTerm spends more than 95% time on painting screen. Speedup painting will significantly
+increase performance. Here are some suggestions for frame buffer device:
+
+  * Enable fast scrolling on frame buffer device. The visible screen will be just a window of the video memory,
+when scrolling, FbTerm only change the start of window, no need to repaint the whole screen.
+    
+  * On Intel P6 family processors the Memory Type Range Registers (MTRRs) may be used to control processor access to
+memory ranges. If you have video card on a PCI or AGP bus, enabling write-combining allows bus write transfers
+to be combined into a larger transfer before bursting over the PCI/AGP bus. This can increase performance of
+FbTerm's paint operations.
+
+Maybe you need to enable them manually for your video card. For example, by default fast scrolling and write-combining
+are all disabled on general VESA frame buffer device, GRUB/LILO configure file should be modified to enable them.
+A GRUB example is showed below:
+
+title Ubuntu
+    root (hd0,0)
+    kernel /boot/vmlinuz ro root=LABEL=UBUNTU splash vga=0x317 \fBvideo=vesafb:ywrap,mtrr:3\fR
+    initrd /boot/initrd.img
+    
+You may check fast scrolling status with "\fBfbterm -v\fR", a message with "scrolling: redraw" means fast scrolling
+is disabled, otherwise enabled.
+.SH "AUTHOR"
+Written by dragchan.
+.SH "REPORTING BUGS"
+Please submit bug reports to <\fBhttp://code.google.com/p/fbterm/issues\fR>.
+.SH "COPYRIGHT"
+Copyright \(co 2008-2010 dragchan.  License GPLv2: GNU GPL version 2 or later <http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.

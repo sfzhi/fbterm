@@ -1,0 +1,222 @@
+2010-10-5 version 1.7
+	* vterm.cpp charsetmap.cpp:
+	improved escape sequences support, now curses h/v lines should be drawed correctly 
+	
+	* fbshell.cpp:
+	added redirecting /dev/tty0 output to FbTerm's sub-window
+	
+	* improxy.cpp input.cpp:
+	added shortcut CTRL_ALT_K to kill the frozen IM server
+	
+	* vterm.cpp wcwidth.cpp fbconfig.cpp:
+	added option "ambiguous-wide" to treat ambiguous CJK characters as wide width
+	
+	* font.cpp fbcofnig.cpp:
+	added option "font-height" to force font height
+	
+	* vterm.cpp:
+	do_normal_char(): fixed logical error in insert mode
+	
+	* shell.cpp:
+	autoTextSelect(): fixed logical error
+	
+	* improxy.cpp:
+	improved screen redrawing performance when im is active 
+
+2009-11-14 version 1.6
+	* screen.cpp screen.h screen_render.cpp:
+	reorganized class Screen API for VESA support
+	
+	* screen_clip.cpp:
+	removed this file because similar function has been recoded in improxy.cpp
+	
+	* vesa.cpp vesa.h vbe.h:
+	added general VESA video card support
+	
+	* fbdev.cpp fbdev.h:
+	moved frame buffer device support from class Screen to new class FbDev
+	
+	* immessage.h improxy.cpp:
+	added IM rendering message for IM server development
+	
+	* input.cpp:
+	moved tty initialing code from ttyInput() to switchVc()
+	Ctrl+Space won't be a shortcut if user run FbTerm without input-method option
+	
+	* mouse.cpp:
+	fixed a bug where FbTerm isn't compiled with gpm mouse support but run with gpm server enabled
+	
+	* fbconfig.cpp:
+	added options for VESA support
+	fixed some spelling errors in FbTerm's help message
+	
+	* doc/inputmethod.txt:
+	removed content of this file to be comments of im/immessage.h and im/imapi.h
+	
+	* doc/fbterm.1.in:
+	added description for VESA support
+	fixed several spelling errors
+	
+	* imapi.c:
+	fixed a IM dead loop bug triggered by FbTerm's crash
+	fixed a bug where IM maybe doesn't process pending messages until a new message arrives
+
+2009-04-26 version 1.5
+	* fbconfig.cpp fbshell.cpp shell.cpp:
+	added command line arguments to customize command executed in sub-window, which is user's login shell by default
+	
+	* improxy.cpp input.cpp fbshell.cpp fbshellman.cpp:
+	added Alt-Fn and all FbTerm's shortcuts support when input method is actived
+	
+	* screen_render.cpp:
+	added support for text rendering with background image
+	
+	* fbconfig.cpp fbshell.cpp input.cpp font.cpp screen.cpp:
+	showInfo(): added option "-v/--verbose" to show extra system information
+	
+	* lib/shell.cpp:
+	createShellProcess(): changed shell program selection algorithm
+	
+	* screen.cpp:
+	createInstance(): changed frame buffer device selection behavior
+	
+	* font.cpp:
+	createInstance(): removed duplicate fonts with same family from ordered font list
+	
+	* lib/io.cpp:
+	localCodec(): fixed UTF-8 characters not showed correctly when locale is C/POSIX
+	
+	* lib/vterm.h:
+	fixed a bug with character color for underline/halfbright attribute in version 1.4
+	
+	* fbterm.cpp:
+	fixed a clearing screen issue on startup even in inactive tty
+	
+	* fbconfig.cpp:
+	Config(): fixed a bug when user try to execute FbTerm in initscripts and variable HOME is not defined
+	
+	* input.cpp:
+	fixed a bug that ctrl/space release keycodes are sent to im server when user enable it by pressing ctrl+space
+
+2009-03-14 version 1.4
+	* screen_render.cpp:
+	improved text rendering performance
+	
+	* lib/vterm_state.cpp lib/vterm_action.cpp fbshell.cpp:
+	added private escape sequences for 256 color support 
+	
+	* font.cpp fbconfig.cpp:
+	added a option to adjust font width
+	
+	* fbterm.cpp fbio.cpp:
+	added using select() for old 2.2/2.4 kernel
+	
+	* font.cpp:
+	fixed a crash bug where font's width/height returns zero for bitmap fonts
+	
+	* font.cpp screen.cpp:
+	removed codes for non fixed width font
+	
+	* configure:
+	fixed a failure with cross-compiling environment
+
+2008-12-20 version 1.3
+	* fbconfig.cpp:
+	added command line arguments to change option values
+
+	* fbterm.cpp fbshellman.cpp fbshell.cpp improxy.cpp improxy.h input.cpp im/*:
+	added client-server based input method framework
+		
+	* screen.cpp screen_clip.cpp:
+	added screen clip support for IM
+	
+	* screen.cpp font.cpp:
+	added screen rotation support
+	
+	* screen.cpp:
+	drawGlyph(): fixed a spelling error of '=' as '-', which even appears in version 1.0
+	move(): fixed a duplicate repaint bug while fast scrolling type is ypan
+	moved paint code to a separate source file screen_render.cpp
+	
+	* screen_render.cpp:
+	setupSysPalette(): added support visual FB_VISUAL_DIRECTCOLOR
+	
+	* mouse.cpp lib/shell.cpp lib/shell.h:
+	added mouse wheel support
+	
+	* lib/vterm.h lib/vterm.cpp:
+	decreased memory usage of every vterm instance by changing struct CharAttr size from 4 to 2 bytes
+	
+	* font.cpp:
+	replaced hash table based glyph cache with direct array index, removed dependence of hash.h/hash.cpp
+	
+	* input.cpp:
+	readyRead(): fixed a unicode input character processing error
+	
+	* lib/shell.cpp lib/vterm.cpp:
+	fixed a bug of not inverse color for selected text when switch back to the shell
+	moved mouse pointer drawing code to class FbShell
+	
+	* fbshell.cpp:
+	fixed a bug of maybe not restore original console state after FbTerm exited
+	moved class FbShellManager to separate source files fbshellman.h and fbshellman.cpp
+	
+	* fbshellman.cpp:
+	switchShell(): fixed a duplicate repaint bug while switch to same window
+	
+	* configure src/Makefile.in fbterm.cpp fbshell.cpp input.cpp:
+	added using filesystem capability attributes offered by kernel 2.6.27, instead of setting set-user-ID bit on FbTerm
+
+2008-10-12 version 1.2
+	* lib/term.h lib/term.cpp lib/term_states.cpp lib/term_action.cpp:
+	improved escape and control sequences compatibility with linux console
+	
+	* fbshell.cpp:
+	added support linux console sequences for changing the color palette and cursor shape
+	moved shell management code to a separate class FbShellManager
+	
+	* fbconfig.cpp fbshell.cpp:
+	added option to adjust default cursor shape and flash interval
+	added option to modify chars considered as part of a word while auto-selecting text
+	
+	* fbterm.cpp:
+	added handle signal SIGHUP, FbTerm will exit normally while shutdown system directly in it
+	
+	* mouse.cpp:
+	Mouse(): fixed a freeze issue caused by changing console winsize under kernel 2.6.26
+	
+	* screen.cpp:
+	createInstance(): fixed a crash bug while font size is greater than screen size
+	
+	* lib/shell.cpp:
+	cleaned text selection code and fixed a crash bug
+	
+	* fbshell.cpp:
+	fixed not repainting screen when switch back to virtual console which FbTerm running on, but FbTerm not have active window
+	
+	* lib/term_action.cpp:
+	next_param(): fixed a buffer overflow issue which may cause denial of service via application crash
+
+2008-08-23 version 1.1
+	* fbshell.h fbshell.cpp fbterm.cpp input_key.h:
+	added configurable additional text encoding support and switch between them with hot keys
+	
+	* lib/term.h lib/term.cpp fbshell.cpp:
+	added a option in configure file to let user adjust max scroll-back history lines of every window
+	
+	* lib/term.cpp:
+	expose(): fixed a bug of NOT redraw whole changed area
+	a example is cursor drawing error while shell command line containing double width characters
+	
+	* hash.cpp:
+	find(): fixed a bug to get a little better hash search performance
+	
+	* fbterm.cpp:
+	pollSingal(): fixed a variable name spelling error in source for older kernel support
+	SignalIo::readyRead(): fixed a compile failure while kernel headers version less than 2.6.24
+	
+	* screen.cpp:
+	createInstance(): fixed a compile failure under certain systems
+
+2008-07-05 version 1.0
+	first release
