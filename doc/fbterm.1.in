@@ -40,13 +40,13 @@ specify font family names
 \fB-s, --font-size=\fR\fInum\fR
 specify font pixel size
 .TP
-\fB--font-width=\fR\fInum\fR
+\fB-W, --font-width=\fR\fInum\fR
 force font width
 .TP
-\fB--font-height=\fR\fInum\fR
+\fB-H, --font-height=\fR\fInum\fR
 force font height
 .TP
-\fB--font-baseline=\fR\fInum\fR
+\fB-B, --font-baseline=\fR\fInum\fR
 force font baseline
 .TP
 \fB-f, --color-foreground=\fR\fInum\fR
@@ -67,10 +67,10 @@ specify the orientation of screen display
 \fB-i, --input-method=\fR\fItext\fR
 specify input method program
 .TP
-\fB--cursor-shape=\fR\fInum\fR
+\fB-c, --cursor-shape=\fR\fInum\fR
 specify default cursor shape
 .TP
-\fB--cursor-interval=\fR\fInum\fR
+\fB-C, --cursor-interval=\fR\fInum\fR
 specify cursor flash interval
 .TP
 \fB--vesa-mode=\fR\fInum\fR

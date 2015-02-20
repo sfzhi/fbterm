@@ -233,20 +233,20 @@ bool Config::parseArgs(s32 argc, s8 **argv)
 		{ "text-encodings", required_argument, 0, 'e' },
 		{ "screen-rotate", required_argument, 0, 'r' },
 		{ "input-method", required_argument, 0, 'i' },
-		{ "cursor-shape", required_argument, 0, 0 },
-		{ "cursor-interval", required_argument, 0, 1 },
-		{ "font-width", required_argument, 0, 2 },
-		{ "font-height", required_argument, 0, 4 },
-		{ "font-baseline", required_argument, 0, 5 },
+		{ "cursor-shape", required_argument, 0, 'c' },
+		{ "cursor-interval", required_argument, 0, 'C' },
+		{ "font-width", required_argument, 0, 'W' },
+		{ "font-height", required_argument, 0, 'H' },
+		{ "font-baseline", required_argument, 0, 'B' },
 		{ "ambiguous-wide", no_argument, 0, 'a' },
 #ifdef ENABLE_VESA
-		{ "vesa-mode", required_argument, 0, 3 },
+		{ "vesa-mode", required_argument, 0, 0 },
 #endif
 		{ 0, 0, 0, 0 }
 	};
 
 	s32 index;
-	while ((index = getopt_long(argc, argv, "Vvhn:s:f:b:e:r:i:a", options, 0)) != -1) {
+	while ((index = getopt_long(argc, argv, "Vvhn:s:f:b:e:r:i:c:C:W:H:B:a", options, 0)) != -1) {
 		switch (index) {
 		case 'V':
 			printf("FbTerm version " VERSION "\n");
@@ -263,17 +263,17 @@ bool Config::parseArgs(s32 argc, s8 **argv)
 				"  -v, --verbose                   display extra information\n"
 				"  -n, --font-names=TEXT           specify font family names\n"
 				"  -s, --font-size=NUM             specify font pixel size\n"
-				"      --font-width=NUM            force font width\n"
-				"      --font-height=NUM           force font height\n"
-				"      --font-baseline=NUM         force font baseline\n"
+				"  -W, --font-width=NUM            force font width\n"
+				"  -H, --font-height=NUM           force font height\n"
+				"  -B, --font-baseline=NUM         force font baseline\n"
 				"  -f, --color-foreground=NUM      specify foreground color\n"
 				"  -b, --color-background=NUM      specify background color\n"
 				"  -e, --text-encodings=TEXT       specify additional text encodings\n"
 				"  -r, --screen-rotate=NUM         specify orientation of screen display\n"
 				"  -a, --ambiguous-wide            treat ambiguous width characters as wide\n"
 				"  -i, --input-method=TEXT         specify input method program\n"
-				"      --cursor-shape=NUM          specify default cursor shape\n"
-				"      --cursor-interval=NUM       specify cursor flash interval\n"
+				"  -c, --cursor-shape=NUM          specify default cursor shape\n"
+				"  -C, --cursor-interval=NUM       specify cursor flash interval\n"
 #ifdef ENABLE_VESA
 				"      --vesa-mode=NUM             force VESA video mode\n"
 				"                  list            display available VESA video modes\n"
