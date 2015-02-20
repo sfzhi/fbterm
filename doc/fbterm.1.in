@@ -46,6 +46,9 @@ force font width
 \fB--font-height=\fR\fInum\fR
 force font height
 .TP
+\fB--font-baseline=\fR\fInum\fR
+force font baseline
+.TP
 \fB-f, --color-foreground=\fR\fInum\fR
 specify foreground color
 .TP

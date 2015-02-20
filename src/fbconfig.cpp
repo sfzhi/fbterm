@@ -173,10 +173,11 @@ void Config::checkConfigFile(const s8 *name)
 		"font-names=mono\n"
 		"font-size=12\n"
 		"\n"
-		"# force font width (and/or height), usually for non-fixed width fonts\n"
+		"# force font width/height/baseline, usually for non-fixed width fonts\n"
 		"# legal value format: n (fw_new = n), +n (fw_new = fw_old + n), -n (fw_new = fw_old - n)\n"
 		"#font-width=\n"
 		"#font-height=\n"
+		"#font-baseline=\n"
 		"\n"
 		"# default color of foreground/background text\n"
 		"# available colors: 0 = black, 1 = red, 2 = green, 3 = brown, 4 = blue, 5 = magenta, 6 = cyan, 7 = white\n"
@@ -236,6 +237,7 @@ bool Config::parseArgs(s32 argc, s8 **argv)
 		{ "cursor-interval", required_argument, 0, 1 },
 		{ "font-width", required_argument, 0, 2 },
 		{ "font-height", required_argument, 0, 4 },
+		{ "font-baseline", required_argument, 0, 5 },
 		{ "ambiguous-wide", no_argument, 0, 'a' },
 #ifdef ENABLE_VESA
 		{ "vesa-mode", required_argument, 0, 3 },
@@ -263,6 +265,7 @@ bool Config::parseArgs(s32 argc, s8 **argv)
 				"  -s, --font-size=NUM             specify font pixel size\n"
 				"      --font-width=NUM            force font width\n"
 				"      --font-height=NUM           force font height\n"
+				"      --font-baseline=NUM         force font baseline\n"
 				"  -f, --color-foreground=NUM      specify foreground color\n"
 				"  -b, --color-background=NUM      specify background color\n"
 				"  -e, --text-encodings=TEXT       specify additional text encodings\n"

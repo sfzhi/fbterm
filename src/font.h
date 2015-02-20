@@ -46,7 +46,7 @@ public:
 	void showInfo(bool verbose);
 
 private:
-	u32 mWidth, mHeight;
+	u32 mWidth, mHeight, mBaseline;
 };
 
 #endif

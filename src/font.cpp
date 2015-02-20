@@ -141,6 +141,7 @@ Font::Font()
 		mHeight = sizes[index].height;
 		mWidth = sizes[index].width;
 	}
+	mBaseline = face->size->metrics.ascender >> 6;
 
 	if (!(face->face_flags & FT_FACE_FLAG_FIXED_WIDTH)) mWidth = MIN(mWidth, (mHeight + 1) / 2);
 
@@ -164,6 +165,17 @@ Font::Font()
 
 		if (buf[0] == '+' || buf[0] == '-') mHeight += (s32)height;
 		else mHeight = height;
+	}
+
+	u32 baseline = 0;
+	Config::instance()->getOption("font-baseline", baseline);
+
+	if (baseline) {
+		s8 buf[64];
+		Config::instance()->getOption("font-baseline", buf, sizeof(buf));
+
+		if (buf[0] == '+' || buf[0] == '-') mBaseline += (s32)baseline;
+		else mBaseline = baseline;
 	}
 }
 
@@ -305,7 +317,7 @@ Font::Glyph *Font::getGlyph(u32 unicode)
 	w = nw = bitmap.width;
 	h = nh = bitmap.rows;
 	u8 *buf = bitmap.buffer;
-	s32 top = (face->size->metrics.ascender >> 6) - face->glyph->bitmap_top;
+	s32 top = (s32)mBaseline - face->glyph->bitmap_top;
 	if (top < 0) {
 		buf -= top * bitmap.pitch;
 		h = nh += top;
