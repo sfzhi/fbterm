@@ -304,16 +304,22 @@ Font::Glyph *Font::getGlyph(u32 unicode)
 	x = y = 0;
 	w = nw = bitmap.width;
 	h = nh = bitmap.rows;
+	u8 *buf = bitmap.buffer;
+	s32 top = (face->size->metrics.ascender >> 6) - face->glyph->bitmap_top;
+	if (top < 0) {
+		buf -= top * bitmap.pitch;
+		h = nh += top;
+		top = 0;
+	}
 	Screen::instance()->rotateRect(x, y, nw, nh);
 
 	Glyph *glyph = (Glyph *)new u8[OFFSET(Glyph, pixmap) + nw * nh];
-	glyph->left = face->glyph->metrics.horiBearingX >> 6;
-	glyph->top = mHeight - 1 + (face->size->metrics.descender >> 6) - (face->glyph->metrics.horiBearingY >> 6);
-	glyph->width = face->glyph->metrics.width >> 6;
-	glyph->height = face->glyph->metrics.height >> 6;
+	glyph->left = face->glyph->bitmap_left;
+	glyph->top = top;
+	glyph->width = w;
+	glyph->height = h;
 	glyph->pitch = nw;
 
-	u8 *buf = bitmap.buffer;
 	for (y = 0; y < h; y++, buf += bitmap.pitch) {
 		for (x = 0; x < w; x++) {
 			nx = x, ny = y;
