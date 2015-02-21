@@ -1,8 +1,8 @@
 .TH "FbTerm" "1" "@RELEASE_DATE@" "FbTerm @VERSION@" "FbTerm User Manual"
 .SH "NAME"
-FbTerm - a fast Frame Buffer based TERMinal emulator for linux
+FbTerm \- a fast Frame Buffer based TERMinal emulator for linux
 .SH "SYNOPSIS"
-\fBfbterm\fR [\fIoptions\fR] [--] [\fIcommand\fR [\fIarguments\fR]]
+\fBfbterm\fR [\fIoptions\fR] [\-\-] [\fIcommand\fR [\fIarguments\fR]]
 .SH "DESCRIPTION"
 FbTerm is a fast terminal emulator for linux with frame buffer device or VESA video card. Features include:
   
@@ -19,67 +19,67 @@ FbTerm is a fast terminal emulator for linux with frame buffer device or VESA vi
 .SH "OPTIONS"
 \fIcommand\fR [\fIarguments\fR] may be given to override the built-in choice of shell program. Normally FbTerm
 checks the \fISHELL\fR variable. If that is not set, it tries to use the user's login shell program specified in the password
-file. If that is not set, /bin/sh will be used. You should use the \fI--\fR argument to separate FbTerm's options from
+file. If that is not set, /bin/sh will be used. You should use the \fI\-\-\fR argument to separate FbTerm's options from
 the arguments supplied to the \fIcommand\fR.
 
 FbTerm first uses option value specified in command line arguments, then in the configure file \fI$HOME/.fbtermrc\fR.
 If that file doesn't exist, FbTerm will create it with default options on startup.
 .TP
-\fB-h, --help\fR
+\fB\-h, \-\-help\fR
 display the help and exit
 .TP
-\fB-V, --version\fR
+\fB\-V, \-\-version\fR
 display FbTerm version and exit
 .TP
-\fB-v, --verbose\fR
+\fB\-v, \-\-verbose\fR
 display extra FbTerm's information
 .TP
-\fB-n, --font-names=\fR\fItext\fR
+\fB\-n, \-\-font\-names=\fR\fItext\fR
 specify font family names
 .TP
-\fB-s, --font-size=\fR\fInum\fR
+\fB\-s, \-\-font\-size=\fR\fInum\fR
 specify font pixel size
 .TP
-\fB-W, --font-width=\fR\fInum\fR
+\fB\-W, \-\-font\-width=\fR\fInum\fR
 force font width
 .TP
-\fB-H, --font-height=\fR\fInum\fR
+\fB\-H, \-\-font\-height=\fR\fInum\fR
 force font height
 .TP
-\fB-B, --font-baseline=\fR\fInum\fR
+\fB\-B, \-\-font\-baseline=\fR\fInum\fR
 force font baseline
 .TP
-\fB-f, --color-foreground=\fR\fInum\fR
+\fB\-f, \-\-color\-foreground=\fR\fInum\fR
 specify foreground color
 .TP
-\fB-b, --color-background=\fR\fInum\fR
+\fB\-b, \-\-color\-background=\fR\fInum\fR
 specify background color
 .TP
-\fB-e, --text-encodings=\fR\fItext\fR
+\fB\-e, \-\-text\-encodings=\fR\fItext\fR
 specify additional text encodings
 .TP
-\fB-a, --ambiguous-wide
+\fB\-a, \-\-ambiguous\-wide\fR
 treat ambiguous width characters as wide
 .TP
-\fB-r, --screen-rotate=\fR\fInum\fR
+\fB\-r, \-\-screen\-rotate=\fR\fInum\fR
 specify the orientation of screen display
 .TP
-\fB-i, --input-method=\fR\fItext\fR
+\fB\-i, \-\-input\-method=\fR\fItext\fR
 specify input method program
 .TP
-\fB-c, --cursor-shape=\fR\fInum\fR
+\fB\-c, \-\-cursor\-shape=\fR\fInum\fR
 specify default cursor shape
 .TP
-\fB-C, --cursor-interval=\fR\fInum\fR
+\fB\-C, \-\-cursor\-interval=\fR\fInum\fR
 specify cursor flash interval
 .TP
-\fB-l, --term-is-linux\fR
+\fB\-l, \-\-term\-is\-linux\fR
 set TERM variable to "linux"
 .TP
-\fB--vesa-mode=\fR\fInum\fR
+\fB\-\-vesa\-mode=\fR\fInum\fR
 specify VESA video mode
 .TP
-\fB--vesa-mode=list\fR
+\fB\-\-vesa\-mode=list\fR
 display available VESA video modes
 
 .TP
@@ -120,27 +120,27 @@ with it. Normally FbTerm tries to open /dev/fb0 and /dev/fb/0, environment varia
 built-in behavior.
 .SH "VESA VIDEO DEVICE"
 From version 1.6, FbTerm adds VESA video card support. By default, FbTerm tries frame buffer device first, if failure, 
-then tries to use VESA device with highest resolution and color depth. option "\fIvesa-mode\fR" may be given to force only open
-VESA device with the specified video mode. To see available video modes for your VESA card, execute "\fBfbterm --vesa-mode=list\fR".
+then tries to use VESA device with highest resolution and color depth. option "\fIvesa\-mode\fR" may be given to force only open
+VESA device with the specified video mode. To see available video modes for your VESA card, execute "\fBfbterm \-\-vesa\-mode=list\fR".
 
 Attention: 1) VESA support requires root privilege to work; 2) do not force to use VESA device on the system with frame buffer device
 enabled, they maybe conflict with each other.
 .SH "FONT"
 FbTerm invokes fontconfig to get a font list, if the first font doesn't contain the glyph for the rendering character,
-it will try second font, then the third, ... and so on, user can see this ordered font list with "\fBfbterm -v\fR".
+it will try second font, then the third, ... and so on, user can see this ordered font list with "\fBfbterm \-v\fR".
 
-If you don't like the fonts selected by FbTerm, execute "fc-list" to get available fonts, choose favorites as
-the value of option "\fIfont-names\fR". You may also modify the configure file of fontconfig, which will
+If you don't like the fonts selected by FbTerm, execute "fc\-list" to get available fonts, choose favorites as
+the value of option "\fIfont\-names\fR". You may also modify the configure file of fontconfig, which will
 change the behavior of all programs based on fontconfig!
 .SH "TEXT ENCODING"
 By using iconv, FbTerm converts other encodings to internal encoding UTF-8. On startup, FbTerm checks variable
 \fILC_CTYPE\fR to determine the default text encoding, which is binded to shortcut CTRL_ALT_F1.
-User can specify up to 5 additional encodings with option "\fItext-encodings\fR", for example, as a Chinese user,
-you set "text-encodings=gbk,big5", shortcut CTRL_ALT_F2 will bind to gbk, and CTRL_ALT_F3 bind to big5.
+User can specify up to 5 additional encodings with option "\fItext\-encodings\fR", for example, as a Chinese user,
+you set "text\-encodings=gbk,big5", shortcut CTRL_ALT_F2 will bind to gbk, and CTRL_ALT_F3 bind to big5.
 
 In a number of CJK encodings there are ambiguous width characters which have a width of either narrow or wide
 depending on the context of their use. By default, FbTerm treats them as narrow width characters,
-option "\fIambiguous-wide\fR" may be used to change the behavior.
+option "\fIambiguous\-wide\fR" may be used to change the behavior.
 .SH "BACKGROUND IMAGE"
 FbTerm doesn't load and parse any image file with various formats directly, instead it takes a screen shot of
 frame buffer device on startup if variable \fIFBTERM_BACKGROUND_IMAGE\fR is defined, then uses this screen shot as
@@ -151,12 +151,12 @@ put a image to frame buffer device with a image viewer. A wrapper script using f
 
     #!/bin/bash
 
-    # fbterm-bi: a wrapper script to enable background image with fbterm
-    # usage: fbterm-bi /path/to/image fbterm-options
+    # fbterm\-bi: a wrapper script to enable background image with fbterm
+    # usage: fbterm\-bi /path/to/image fbterm-options
 
-    echo -ne "\\e[?25l" # hide cursor
+    echo \-ne "\\e[?25l" # hide cursor
 
-    fbv -ciuker "$1" << EOF
+    fbv \-ciuker "$1" << EOF
     q
     EOF
 
@@ -186,7 +186,7 @@ in which case the 256 color mode will be unavailable.
 Instead of adding input method directly in FbTerm, a client-server based input method framework is designed to do
 this work. FbTerm acts as a client, standalone IM program as a server, and they run in separated processes.
 
-As a normal IM user, you should install a IM program written for FbTerm, and specify it as the value of option "\fIinput-method\fR".
+As a normal IM user, you should install a IM program written for FbTerm, and specify it as the value of option "\fIinput\-method\fR".
 CTRL_SPACE is the shortcut to activate/deactivate input method. And CTRL_ALT_K may be used to kill the IM program when it has freezed. 
 
 .SH "SECURITY NOTES"
@@ -222,7 +222,7 @@ title Ubuntu
     kernel /boot/vmlinuz ro root=LABEL=UBUNTU splash vga=0x317 \fBvideo=vesafb:ywrap,mtrr:3\fR
     initrd /boot/initrd.img
     
-You may check fast scrolling status with "\fBfbterm -v\fR", a message with "scrolling: redraw" means fast scrolling
+You may check fast scrolling status with "\fBfbterm \-v\fR", a message with "scrolling: redraw" means fast scrolling
 is disabled, otherwise enabled.
 .SH "AUTHOR"
 Written by dragchan.
