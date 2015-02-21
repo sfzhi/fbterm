@@ -73,6 +73,9 @@ specify default cursor shape
 \fB-C, --cursor-interval=\fR\fInum\fR
 specify cursor flash interval
 .TP
+\fB-l, --term-is-linux\fR
+set TERM variable to "linux"
+.TP
 \fB--vesa-mode=\fR\fInum\fR
 specify VESA video mode
 .TP

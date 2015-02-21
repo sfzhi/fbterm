@@ -349,6 +349,7 @@ FbShell::FbShell()
 	mImProxy = 0;
 	mPaletteChanged = false;
 	mPalette = 0;
+	Config::instance()->getOption("term-is-linux", mTermIsLinux);
 	createShellProcess(Config::instance()->getShellCommand());
 	resize(screen->cols(), screen->rows());
 

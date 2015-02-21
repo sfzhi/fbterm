@@ -57,6 +57,8 @@ protected:
 	virtual void initShellProcess() {}
 	virtual void readyRead(s8 *buf, u32 len);
 
+	bool mTermIsLinux;
+
 private:
 	static void initWordChars(s8 *buf, u32 len);
 	virtual void sendBack(const s8 *data);
