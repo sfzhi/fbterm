@@ -79,7 +79,7 @@ void Shell::createShellProcess(s8 **command)
 
 	case 0:  // child process
 		initShellProcess();
-		setenv("TERM", "linux", 1);
+		setenv("TERM", "fbterm", 1);
 
 		if (command) {
 			execvp(command[0], command);
