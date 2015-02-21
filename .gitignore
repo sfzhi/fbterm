@@ -1,0 +1,15 @@
+*.o
+*.a
+*.swp
+.deps
+Makefile
+/config.h
+/config.log
+/config.status
+/stamp-h1
+/fbterm.txt
+/doc/fbterm.1
+/im/immessage.h
+/im/input_key.h
+/im/imexample
+/src/fbterm
