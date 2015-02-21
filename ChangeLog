@@ -1,4 +1,23 @@
-2010-10-5 version 1.7
+2015-02-21 version 1.8
+	* doc/fbterm.1.in:
+	escape '-' (minus) with backslash in the man page
+	
+	* lib/shell.h lib/shell.cpp fbshell.cpp fbconfig.cpp doc/fbterm.1.in:
+	allow to choose 'fbterm' or 'linux' for TERM
+	
+	* lib/shell.cpp doc/fbterm.1.in:
+	changed the default value of TERM to 'fbterm'
+	
+	* fbconfig.cpp doc/fbterm.1.in:
+	added short versions for most command line options
+	
+	* font.h font.cpp fbconfig.cpp doc/fbterm.1.in:
+	added configuration option to adjust font baseline
+	
+	* font.cpp:
+	getGlyph(): fixed incorrect glyph bitmap positioning
+
+2010-10-05 version 1.7
 	* vterm.cpp charsetmap.cpp:
 	improved escape sequences support, now curses h/v lines should be drawed correctly 
 	

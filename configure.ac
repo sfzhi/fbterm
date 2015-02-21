@@ -2,12 +2,12 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([FbTerm], [1.7])
+AC_INIT([FbTerm], [1.8])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([src/fbterm.cpp])
 AC_CONFIG_HEADERS([config.h])
 
-AC_SUBST([RELEASE_DATE], "October 2010")
+AC_SUBST([RELEASE_DATE], "February 2015")
 
 # Checks for programs.
 AC_PROG_CXX
