@@ -60,6 +60,7 @@ Shell::SelectedText Shell::mSelText;
 Shell::Shell()
 {
 	mPid = -1;
+	mTermIsLinux = false;
 }
 
 Shell::~Shell()
