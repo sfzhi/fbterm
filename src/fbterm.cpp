@@ -37,9 +37,12 @@
 #include "input_key.h"
 #include "mouse.h"
 
+#ifndef WAIT_ANY
+#define WAIT_ANY (-1)
+#endif
+
 #ifdef HAVE_SIGNALFD
-// <sys/signalfd.h> offered by some systems has bug with g++
-#include "signalfd.h"
+#include <sys/signalfd.h>
 
 static sigset_t oldSigmask;
 
